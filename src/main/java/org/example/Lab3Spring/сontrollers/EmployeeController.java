@@ -52,7 +52,7 @@ public class EmployeeController {
     @DeleteMapping("{id}")
 
     public void delete (@PathVariable ("id") Employee employee) {
-        employeeRepo.save(employee);
+        employeeRepo.delete(employee);
     }
 }
 
