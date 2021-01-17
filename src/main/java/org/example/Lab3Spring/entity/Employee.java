@@ -6,9 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
+@XmlRootElement(name="employee")
 @Table
 @ToString(of = {"id","text"})
 public class Employee {
@@ -28,7 +32,7 @@ public class Employee {
     public Long getId() {
         return id;
     }
-
+    @XmlElement
     public void setId(Long id) {
         this.id = id;
     }
@@ -36,7 +40,7 @@ public class Employee {
     public String getText() {
         return text;
     }
-
+    @XmlElement
     public void setText(String text) {
         this.text = text;
     }
@@ -44,9 +48,23 @@ public class Employee {
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
-
+    @XmlElement
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id.equals(employee.id) && Objects.equals(text, employee.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, text);
+    }
+
 }
 

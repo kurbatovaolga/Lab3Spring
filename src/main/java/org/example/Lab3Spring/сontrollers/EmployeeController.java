@@ -4,12 +4,14 @@ package org.example.Lab3Spring.сontrollers;
 //import org.example.Lab3Spring.entity.Department;
 
 import org.example.Lab3Spring.entity.Employee;
+import org.example.Lab3Spring.entity.EmployeeXML;
 import org.example.Lab3Spring.repos.EmployeeRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,15 @@ public class EmployeeController {
     public List<Employee> list() {
         return employeeRepo.findAll();
     }
+
+    @GetMapping(value = "/xl")
+    public EmployeeXML getAllEmployeeXML(){
+        Iterable<Employee> employeeIterable = this.employeeRepo.findAll();
+        List<Employee> employeeList = new ArrayList<>();
+      employeeIterable.forEach(employeeList::add);
+        return new EmployeeXML(employeeList);
+    }
+
 
     @GetMapping("{id}")
     public Employee getOne(@PathVariable ("id")Employee employee) {
